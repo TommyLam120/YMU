@@ -1661,17 +1661,17 @@ class MainWindow(QMainWindow):
         layout.addStretch()
 
         footer_button = StatefulButton(
-            f"YMU {update_checker.LOCAL_VERSION}\n© NiiV3AU",
+            f"YMU {update_checker.LOCAL_VERSION}\n© Tommy",
             theme_manager=self.theme_manager,
         )
         footer_button.setObjectName("SidebarFooter")
-        footer_button.clicked.connect(lambda: webbrowser.open("https://ymu.pages.dev/"))
-        footer_button.setToolTip(
-            self.loc_manager.tr(
-                "Sidebar.Tooltip.ProjectPage",
-                "Open the YMU project page in your browser",
-            )
-        )
+        #footer_button.clicked.connect(lambda: webbrowser.open("https://ymu.pages.dev/"))
+        #footer_button.setToolTip(
+         #   self.loc_manager.tr(
+          #      "Sidebar.Tooltip.ProjectPage",
+           #     "Open the YMU project page in your browser",
+           # )
+       # )
 
         layout.addWidget(footer_button)
 
