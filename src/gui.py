@@ -2483,11 +2483,37 @@ class InjectPage(QWidget):
         """Contains the actual logic for launching the game."""
         launcher = self.launcher_select.currentText()
         logger.info(f"Attempting to launch GTA 5 via {launcher} launcher.")
+        
+        # 根據選擇的DLL版本決定Epic Games URI
+        epic_games_uris = {
+            "YimMenu": "com.epicgames.launcher://apps/0584d2013f0149a791e7b9bad0eec102%3A6e563a2c0f5f46e3b4e88b5f4ed50cca%3A9d2d0eb64d5c44529cece33fe2a46482?action=launch&silent=true",
+            "YimMenuV2": "com.epicgames.launcher://apps/b0cd075465c44f87be3b505ac04a2e46%3A122e5e90b7b8424d930be8bc1a7e05fb%3A8769e24080ea413b8ebca3f1b8c50951?action=launch&silent=true",
+        }
+        
         launch_uris = {
             "Steam": "steam://run/271590",
-            "Epic Games": "com.epicgames.launcher://apps/9d2d0eb64d5c44529cece33fe2a46482?action=launch&silent=true",
+            "Epic Games": None,  # 將在下面根據DLL版本設置
+            "Rockstar Games": None,  # 特殊處理
         }
-
+        
+        # 如果選擇Epic Games，根據選擇的DLL決定URI
+        if launcher == "Epic Games":
+            if self.dll_to_inject:
+                dll_base = os.path.splitext(self.dll_to_inject)[0]  # 獲取不帶擴展名的文件名
+                uri = epic_games_uris.get(dll_base)
+                
+                if uri:
+                    launch_uris["Epic Games"] = uri
+                    logger.info(f"Using Epic URI for {dll_base}")
+                else:
+                    # 默認使用YimMenuV2
+                    launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
+                    logger.warning(f"No specific URI for {dll_base}, using YimMenuV2")
+            else:
+                # 默認使用YimMenuV2
+                launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
+                logger.info("No DLL selected, using default YimMenuV2 URI for Epic Games")
+        
         uri = launch_uris.get(launcher)
         if uri:
             try:
@@ -2497,7 +2523,6 @@ class InjectPage(QWidget):
             except Exception as e:
                 logger.exception(f"Failed to open URI for {launcher}: {e}")
                 raise RuntimeError(f"Could not send command to {launcher}.") from e
-
         elif launcher == "Rockstar Games":
             path = self._get_rockstar_path()
             if not path:
