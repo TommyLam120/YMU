@@ -3,7 +3,7 @@ import os
 import sys
 
 LOCAL_VERSION = "v1.1.6"
-APP_URL = "https://github.com/NiiV3AU/YMU"
+APP_URL = "https://github.com/tommylam120/YMU"
 USER_AGENT = f"YMU/{LOCAL_VERSION} (+{APP_URL})"
 
 
