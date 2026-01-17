@@ -7,8 +7,10 @@ from paths import YMU_APPDATA_DIR, LOCAL_VERSION
 
 logger = logging.getLogger(__name__)
 
-REPO = "NiiV3AU/YMU"
-UPDATER_REPO = "xesdoog/YMU-Updater"
+# 修改為你的倉庫
+REPO = "tommyLam120/YMU"
+# 更新器可以保持使用原版，或者創建你自己的
+UPDATER_REPO = "tommylam120/YMU-Updater"
 UPDATER_EXE_PATH = os.path.join(YMU_APPDATA_DIR, "ymu_self_updater.exe")
 
 _update_cache = {}
