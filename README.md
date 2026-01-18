@@ -54,21 +54,7 @@ Get the latest release directly from the downloads page. Just download and run t
 
 ### Full Changelog
 
-- **NEW** in `v1.1.6` ↦ 🌍 **Localization & Performance:** Added full support for GTA V Enhanced Edition, support for 12 languages, and migrated to Nuitka for a significantly smaller and faster executable.
-- **NEW** in `v1.1.5` ↦ 💥 **The Modern UI Update:** Complete rewrite from the ground up with a professional architecture, a brand new user interface, and major UX improvements.
-- **NEW** in `v1.1.4` ↦ added Buttons (YimMenu GitHub Repo & FSL's UC-Thread) in Download Tab + updated "more info"-Windows in Download- & Inject-Tab
-- **NEW** in `v1.1.3` ↦ New Lua list in Settings-Tab
-- **NEW** in `v1.1.2` ↦ fixed progressbar freezing
-- **NEW** in `v1.1.0` & `v1.1.1` ↦ Small bug fixes
-- **NEW** in `v1.0.9` ↦ Log-System (Debugger) for better troubleshooting (PATH:ymu/ymu.log) + Caching for better performance added
-- **NEW** in `v1.0.8` ↦ New Buttons in Settings-Tab for Troubleshooting
-- **NEW** in `v1.0.7` ↦ Reworked code for Starting GTA5
-- **NEW** in `v1.0.6` ↦ New "Start GTA5"-Button in Inject-Tab + visual updates in Inject and Settings-Tab
-- **NEW** in `v1.0.5` ↦ New "Debug Console"-Switch in Settings-Tab + "Open in Browser"-Button in Changelog Window
-- **NEW** in `v1.0.4` ↦ GUI: Theme selection (light & dark) + Settings-Tab: auto reload all lua scripts (YimMenu Config)
-- **NEW** in `v1.0.3` ↦ Self-Updater in new Settings-Tab + small GUI changes and code improvements
-- **NEW** im `v1.0.2` ↦ Changelog of YimMenu in Download/Update-Tab
-- **NEW** in `v1.0.1` ↦ Injection in the new Inject-Tab
+
 
 </details>
 
