@@ -181,6 +181,9 @@ This project uses **Nuitka** (instead of PyInstaller) to create a high-performan
 
     ```bash
     python -m nuitka --onefile --standalone --enable-plugin=pyside6 --windows-icon-from-ico=src/assets/icons/logo_dark.ico --include-data-dir=src/assets=assets --windows-console-mode=disable --output-dir=dist --output-filename=YMU.exe src/gui.py
+
+    nuitka --onefile --standalone --enable-plugin=pyside6 --windows-icon-from-ico=src/assets/icons/ymu.ico --include-data-dir=src/assets=assets --windows-console-mode=disable --output-dir=dist --output-filename=YMU.exe src/gui.py
+
     ```
 
     **Command Breakdown:**
