@@ -79,6 +79,7 @@
             "Launcher": { "Select": "Select Launcher" },
             "Btn": {
                 "StartGta": "Start GTA 5",
+                "StartGtaV2": "Start GTA 5 Enhanced",
                 "InjectBase": "Inject YimMenu",
                 "NoDll": "No DLL found",
                 "InjectFile": "Inject {0}"
@@ -254,6 +255,7 @@
             "Launcher": { "Select": "Launcher wählen" },
             "Btn": {
                 "StartGta": "GTA 5 starten",
+                "StartGtaV2": "Starte GTA 5 Enhanced",
                 "InjectBase": "YimMenu injecten",
                 "NoDll": "Keine DLL gefunden",
                 "InjectFile": "{0} injecten"
@@ -429,6 +431,7 @@
             "Launcher": { "Select": "Selecteer Launcher" },
             "Btn": {
                 "StartGta": "Start GTA 5",
+                "StartGtaV2": "Start GTA 5 Enhanced",
                 "InjectBase": "Injecteer YimMenu",
                 "NoDll": "Geen DLL gevonden",
                 "InjectFile": "Injecteer {0}"
@@ -604,6 +607,7 @@
             "Launcher": { "Select": "Choisir Launcher" },
             "Btn": {
                 "StartGta": "Lancer GTA 5",
+                "StartGtaV2": "Lancer GTA 5 Enhanced",
                 "InjectBase": "Injecter YimMenu",
                 "NoDll": "Aucune DLL trouvée",
                 "InjectFile": "Injecter {0}"
@@ -779,6 +783,7 @@
             "Launcher": { "Select": "Elegir Launcher" },
             "Btn": {
                 "StartGta": "Iniciar GTA 5",
+                "StartGtaV2": "Iniciar GTA 5 Enhanced",
                 "InjectBase": "Inyectar YimMenu",
                 "NoDll": "No se encontró DLL",
                 "InjectFile": "Inyectar {0}"
@@ -954,6 +959,7 @@
             "Launcher": { "Select": "Selecionar Launcher" },
             "Btn": {
                 "StartGta": "Iniciar GTA 5",
+                "StartGtaV2": "Iniciar GTA 5 Enhanced",
                 "InjectBase": "Injetar YimMenu",
                 "NoDll": "Nenhuma DLL encontrada",
                 "InjectFile": "Injetar {0}"
@@ -1129,6 +1135,7 @@
             "Launcher": { "Select": "Wybierz Launcher" },
             "Btn": {
                 "StartGta": "Uruchom GTA 5",
+                "StartGtaV2": "Uruchom GTA 5 Enhanced",
                 "InjectBase": "Wstrzyknij YimMenu",
                 "NoDll": "Nie znaleziono DLL",
                 "InjectFile": "Wstrzyknij {0}"
@@ -1304,6 +1311,7 @@
             "Launcher": { "Select": "Выбрать Лаунчер" },
             "Btn": {
                 "StartGta": "Запустить GTA 5",
+                "StartGtaV2": "Запустить GTA 5 Enhanced",
                 "InjectBase": "Заинжектить YimMenu",
                 "NoDll": "DLL не найдена",
                 "InjectFile": "Заинжектить {0}"
@@ -1479,6 +1487,7 @@
             "Launcher": { "Select": "Обрати Лаунчер" },
             "Btn": {
                 "StartGta": "Запустити GTA 5",
+                "StartGtaV2": "Запустити GTA 5 Enhanced",
                 "InjectBase": "Заінжектити YimMenu",
                 "NoDll": "DLL не знайдено",
                 "InjectFile": "Заінжектити {0}"
@@ -1654,6 +1663,7 @@
             "Launcher": { "Select": "Launcher Seç" },
             "Btn": {
                 "StartGta": "GTA 5'i Başlat",
+                "StartGtaV2": "GTA 5 Enhanced'ı Başlat",
                 "InjectBase": "YimMenu'yu Enjekte Et",
                 "NoDll": "DLL bulunamadı",
                 "InjectFile": "{0} Enjekte Et"
@@ -1829,6 +1839,7 @@
             "Launcher": { "Select": "选择启动器" },
             "Btn": {
                 "StartGta": "启动 GTA 5",
+                "StartGtaV2": "启动 GTA 5 增强版",
                 "InjectBase": "注入 YimMenu",
                 "NoDll": "未找到 DLL",
                 "InjectFile": "注入 {0}"
@@ -2004,6 +2015,7 @@
             "Launcher": { "Select": "選擇啟動器" },
             "Btn": {
                 "StartGta": "啟動 GTA 5",
+                "StartGtaV2": "啟動 GTA 5 增強版",
                 "InjectBase": "注入 YimMenu",
                 "NoDll": "未找到 DLL",
                 "InjectFile": "注入 {0}"
@@ -2179,6 +2191,7 @@
             "Launcher": { "Select": "ランチャーを選択" },
             "Btn": {
                 "StartGta": "GTA 5 を起動",
+                "StartGtaV2": "GTA 5 Enhanced を起動",
                 "InjectBase": "YimMenuをインジェクト",
                 "NoDll": "DLLが見つかりません",
                 "InjectFile": "{0} をインジェクト"
