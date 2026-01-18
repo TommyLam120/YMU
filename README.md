@@ -215,9 +215,6 @@ This project uses **Nuitka** (instead of PyInstaller) to create a high-performan
 ---
 
 ## Credits
-
-| **Contributers** | [**@xesdoog**](https://github.com/xesdoog)                                                                          |
-| :--------------- | :------------------------------------------------------------------------------------------------------------------ |
 | **Menu**         | [**YimMenu**](https://yim.gta.menu/)                                                                                |
 | **Logo**         | [**Made with Figma**](https://figma.com)                                                                            |
 | **Icons**        | [**Feather**](https://feathericons.dev/)                                                                            |
