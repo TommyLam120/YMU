@@ -1,7 +1,7 @@
 > [!NOTE]
 > **GTA V Enhanced Support Resolved**
 >
-> The detection issues regarding the "Enhanced" version of GTA V have been **fixed** in version **v1.1.6**. Please update to the latest version to ensure full compatibility.
+> The detection issues regarding the "Enhanced" version of GTA V have been **fixed** in version **v1.1.7**. Please update to the latest version to ensure full compatibility.
 
 ## ✅ Safe & Secure
 
