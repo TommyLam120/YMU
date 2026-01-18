@@ -3,25 +3,6 @@
 >
 > The detection issues regarding the "Enhanced" version of GTA V have been **fixed** in version **v1.1.6**. Please update to the latest version to ensure full compatibility.
 
-# YimMenuUpdater (YMU)
-
-The modern, all-in-one launchpad for YimMenu. **Always updated, always ready.**
-
-<div align="center">
-
-[![Website](https://img.shields.io/badge/Website-ymu.pages.dev-gray?style=for-the-badge&logo=cloudflare&logoColor=white&labelColor=F38020)](https://ymu.pages.dev/)
-[![Latest Release](https://img.shields.io/github/v/release/NiiV3AU/YMU?style=for-the-badge&logo=github&logoColor=white&labelColor=181717&color=gray)](https://github.com/NiiV3AU/YMU/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/NiiV3AU/YMU/total?style=for-the-badge&logo=github&logoColor=white&labelColor=181717&color=gray)](https://github.com/NiiV3AU/YMU/releases)
-[![VirusTotal Scan](https://img.shields.io/badge/VirusTotal-View_Scan_Report-gray?style=for-the-badge&logo=virustotal&logoColor=white&labelColor=394EFF)](https://www.virustotal.com/gui/file/7925f2d9faddaa72d54005bdff507522c1b1214760847629abbd5444eb39d548)
-
-![YMU Showcase](https://github.com/user-attachments/assets/a017affb-f48f-44fe-be75-222d2e3477dc?raw=true)
-
-</div>
-
-[YMU](https://ymu.pages.dev/) is a sleek and powerful launcher for YimMenu that handles everything for you. From downloading the latest DLLs to injecting them into the game, YMU ensures a stable and seamless experience with a clean and intuitive user interface.
-
----
-
 ## ✅ Safe & Secure
 
 Your security is the top priority.
@@ -67,50 +48,6 @@ Get the latest release directly from the downloads page. Just download and run t
   <img src="https://github.com/user-attachments/assets/2d111d22-7344-4a71-ad5e-899d7bd091bf?raw=true" alt="YMU Light Theme: Settings" width="32%"/>
   <img src="https://github.com/user-attachments/assets/19fcf98e-83e2-4083-bbb5-717cb4bb86fe?raw=true" alt="YMU Light Theme: Inject" width="32%"/>
   <img src="https://github.com/user-attachments/assets/857f8c8c-3746-4a1d-800c-f926613a03d2?raw=true" alt="YMU Light Theme: Download" width="32%"/>
-</div>
-
----
-
-## 🖼️ Project Evolution
-
-<details>
-<summary><b>A look back at older versions & the full changelog</b></summary>
-
-### v1.0.9
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/a8298b7d-ee3b-4314-a1f8-4a005c23f2f6" alt="YMU v1.0.9" width="32%"/>
-</div>
-
-### v1.0.3
-
-<div align="center">
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/5cf46352-0bdb-442f-b1fa-951d3ba1d35b" alt="YMU v1.0.3 Download/Update Tab" width="32%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/f717a2b8-b9c6-4225-ad05-b9d3ff1204e3" alt="YMU v1.0.3 Inject Tab" width="32%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/07c4c61d-41a2-47f7-9256-f81337b8512d" alt="YMU v1.0.3 Settings Tab" width="32%"/>
-</div>
-
-### v1.0.2
-
-<div align="center">
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/2f138a6a-21be-4cde-9a10-4057b186302b" alt="YMU v1.0.2 Download/Update Tab" width="22%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/5b4b05f5-90c7-42d4-9c58-791a71b48cdb" alt="YMU v1.0.2 Inject Tab" width="22%"/>
-</div>
-
-### v1.0.1
-
-<div align="center">
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/b14342a3-af81-4da0-b863-df2e264bce5f" alt="YMU v1.0.1 Download Tab" width="24%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/86a307f0-8b8f-4b8a-931d-fa855a70c365" alt="YMU v1.0.1 Update Tab" width="24%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/60834c8d-1c4e-42e6-90a5-062c0e8f9546" alt="YMU v1.0.1 SHA256 Tab" width="24%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/b16bedc6-ca12-4d0e-9c96-ec9e73f1c978" alt="YMU v1.0.1 Inject Tab" width="24%"/>
-</div>
-
-### v1.0.0
-
-<div align="center">
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/6d1635a2-0596-445d-bcad-752cf6c0f904" alt="YMU v1.0.0 Download/Update Tab" width="38%"/>
-  <img src="https://github.com/NiiV3AU/YMU/assets/86131759/e98c1a92-0bff-45d2-a2a2-218fa32fa416" alt="YMU v1.0.0 SHA256 Tab" width="38%"/>
 </div>
 
 ---
