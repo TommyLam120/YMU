@@ -10,7 +10,7 @@ from paths import YMU_LANG_DIR, YMU_CONFIG_FILE_PATH, USER_AGENT
 
 logger = logging.getLogger(__name__)
 
-REMOTE_LANG_URL = "https://raw.githubusercontent.com/NiiV3AU/YMU/main/translations.json"
+REMOTE_LANG_URL = "https://raw.githubusercontent.com/tommylam120/YMU/main/translations.json"
 LOCAL_FILE_PATH = os.path.join(YMU_LANG_DIR, "translations.json")
 
 FALLBACK_DATA = {
