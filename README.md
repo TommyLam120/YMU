@@ -46,7 +46,7 @@ Your security is the top priority.
 
 Get the latest release directly from the downloads page. Just download and run the `YMU.exe`.
 
-| [Download YMU.exe (Latest Release)](https://github.com/NiiV3AU/YMU/releases/latest) |
+| [Download YMU.exe (Latest Release)](https://github.com/tommylam120/YMU/releases/latest) |
 | :---------------------------------------------------------------------------------: |
 
 ---
@@ -144,7 +144,7 @@ Get the latest release directly from the downloads page. Just download and run t
   
 ### First things first - get the source
 
-| [Download Source Code](https://github.com/NiiV3AU/YMU/archive/refs/heads/main.zip) |
+| [Download Source Code](https://github.com/tommylam120/YMU/archive/refs/heads/main.zip) |
 | :--------------------------------------------------------------------------------: |
 
 ### Requirements and Dependencies
