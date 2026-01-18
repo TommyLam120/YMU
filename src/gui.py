@@ -1,5 +1,3 @@
-# gui.py - Contains all the UI code for the application using PySide6.
-
 import sys
 import os
 import logging
@@ -2223,7 +2221,7 @@ class InjectPage(QWidget):
         self.launcher_select.setFixedWidth(175)
         self.launcher_select.setToolTip(
             self.loc_manager.tr(
-                "Inject.Tooltip.Launcher", "Select the launcher you use to start GTA V"
+                "Inject.Tooltip.Launcher", "Select the launcher you use to start GTA 5"
             )
         )
         self.launcher_select.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -2357,6 +2355,10 @@ class InjectPage(QWidget):
             self.inject_button.setText(
                 self.loc_manager.tr("Inject.Btn.NoDll", "No DLL found")
             )
+            # 當沒有 DLL 時，設置預設的 GTA 啟動按鈕文字
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
             self.inject_button.setEnabled(False)
 
         elif len(found_dlls) == 1:
@@ -2364,6 +2366,8 @@ class InjectPage(QWidget):
             self.dll_to_inject = found_dlls[0]
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(cleaned_names[0]))
+            # 根據 DLL 版本設置 GTA 啟動按鈕文字
+            self._update_start_button_text(cleaned_names[0])
 
         else:
             self.dll_select.addItems(cleaned_names)
@@ -2372,6 +2376,8 @@ class InjectPage(QWidget):
             self.dll_to_inject = f"{current_cleaned_name}.dll"
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(current_cleaned_name))
+            # 根據 DLL 版本設置 GTA 啟動按鈕文字
+            self._update_start_button_text(current_cleaned_name)
 
         self._update_ui_for_state()
 
@@ -2383,10 +2389,40 @@ class InjectPage(QWidget):
             self.inject_button.setText(fmt.format(cleaned_name))
 
             self.dll_to_inject = f"{cleaned_name}.dll"
+            # 根據選擇的 DLL 更新 GTA 啟動按鈕文字
+            self._update_start_button_text(cleaned_name)
         self._update_ui_for_state()
+
+    def _update_start_button_text(self, dll_name: str):
+        """根據 DLL 名稱更新 Start GTA 按鈕的文字"""
+        launcher = self.launcher_select.currentText()
+        
+        # 只有當選擇 Epic Games 啟動器時才顯示不同文字
+        if launcher == "Epic Games":
+            if dll_name == "YimMenuV2":
+                self.start_gta_button.setText(
+                    self.loc_manager.tr("Inject.Btn.StartGtaV2", "Start GTA 5 Enhanced")
+                )
+            else:
+                self.start_gta_button.setText(
+                    self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+                )
+        else:
+            # 其他啟動器使用預設文字
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
 
     def _on_launcher_selection_changed(self):
         """Enables or disables the start button based on the dropdown selection."""
+        # 更新 DLL 選擇後，也要更新按鈕文字
+        if self.dll_to_inject:
+            dll_base = os.path.splitext(self.dll_to_inject)[0]
+            self._update_start_button_text(dll_base)
+        else:
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
         self._update_ui_for_state()
 
     def show_inject_info_dialog(self):
@@ -2451,7 +2487,7 @@ class InjectPage(QWidget):
         )
 
     def _get_rockstar_path(self) -> str | None:
-        """Finds the GTA V install path via Registry (Standard & Enhanced)."""
+        """Finds the GTA 5 install path via Registry (Standard & Enhanced)."""
         if not IS_WINDOWS:
             return None
         possible_subkeys = [
@@ -2471,7 +2507,7 @@ class InjectPage(QWidget):
                 if path:
                     path = path.strip('"').strip()
                     if os.path.exists(path):
-                        logger.info(f"Found GTA V path via registry at: {path}")
+                        logger.info(f"Found GTA 5 path via registry at: {path}")
                         return path
             except OSError:
                 continue
@@ -2641,7 +2677,7 @@ class InjectPage(QWidget):
         if isinstance(error, PermissionError) or "Access Denied" in str(error):
             msg = self.loc_manager.tr(
                 "Inject.Error.AccessDenied",
-                "Missing permissions to inject into GTA V.\nTry restarting YMU as Administrator.",
+                "Missing permissions to inject into GTA 5.\nTry restarting YMU as Administrator.",
             )
             action_text = self.loc_manager.tr("Common.RestartAdmin", "Restart as Admin")
             cast(MainWindow, self.window()).notification_manager.show(
