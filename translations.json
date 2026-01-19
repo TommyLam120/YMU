@@ -114,7 +114,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Appearance",
-                "Lua": "Lua Settings",
+                "Lua": "YimMenu Lua Settings",
                 "Other": "Other"
             },
             "Label": { "Language": "Language" },
@@ -290,7 +290,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Design",
-                "Lua": "Lua Einstellungen",
+               "Lua": "YimMenu Lua Einstellungen",
                 "Other": "Sonstiges"
             },
             "Label": { "Language": "Sprache" },
@@ -466,7 +466,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Uiterlijk",
-                "Lua": "Lua Instellingen",
+               "Lua": "YimMenu Lua Instellingen",
                 "Other": "Overig"
             },
             "Label": { "Language": "Taal" },
@@ -1698,7 +1698,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Görünüm",
-                "Lua": "Lua Ayarları",
+               "Lua": "YimMenu Lua Ayarları",
                 "Other": "Diğer"
             },
             "Label": { "Language": "Dil (Language)" },
@@ -1874,7 +1874,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "外观",
-                "Lua": "Lua 设置",
+               "Lua": "YimMenu Lua 设置",
                 "Other": "其他"
             },
             "Label": { "Language": "语言 (Language)" },
@@ -2050,7 +2050,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "外觀",
-                "Lua": "Lua 設定",
+               "Lua": "YimMenu Lua 設定",
                 "Other": "其他"
             },
             "Label": { "Language": "語言 (Language)" },
@@ -2226,7 +2226,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "外観",
-                "Lua": "Lua 設定",
+               "Lua": "YimMenu Lua 設定",
                 "Other": "その他"
             },
             "Label": { "Language": "言語 (Language)" },
