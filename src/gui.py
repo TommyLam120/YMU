@@ -2836,7 +2836,7 @@ class SettingsPage(QWidget):
         lua_frame.setObjectName("CardFrame")
         lua_layout = QVBoxLayout(lua_frame)
 
-        lua_title = QLabel(self.loc_manager.tr("Settings.Header.Lua", "Lua Settings"))
+        lua_title = QLabel(self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings"))
         lua_title.setObjectName("SettingsTitle")
 
         auto_reload_layout = QHBoxLayout()
