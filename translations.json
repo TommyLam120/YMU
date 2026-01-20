@@ -115,7 +115,7 @@
             "Header": {
                 "Appearance": "Appearance",
                 "Lua": "YimMenu Lua Settings",
-                "Luav2": "YimMenuV2 Lua Settings",
+                "LuaV2": "YimMenuV2 Lua Settings",
                 "Other": "Other"
             },
             "Label": { "Language": "Language" },
@@ -292,7 +292,7 @@
             "Header": {
                 "Appearance": "Design",
                 "Lua": "YimMenu Lua Einstellungen",
-                "Luav2": "YimMenuV2 Lua Einstellungen",
+                "LuaV2": "YimMenuV2 Lua Einstellungen",
                 "Other": "Sonstiges"
             },
             "Label": { "Language": "Sprache" },
@@ -469,7 +469,7 @@
             "Header": {
                 "Appearance": "Uiterlijk",
                 "Lua": "YimMenu Lua Instellingen",
-                "Luav2": "YimMenuV2 Lua Instellingen",
+                "LuaV2": "YimMenuV2 Lua Instellingen",
                 "Other": "Overig"
             },
             "Label": { "Language": "Taal" },
@@ -646,7 +646,7 @@
             "Header": {
                 "Appearance": "Apparence",
                 "Lua": "Paramètres Lua YimMenu",
-                "Luav2": "Paramètres Lua YimMenuV2",
+                "LuaV2": "Paramètres Lua YimMenuV2",
                 "Other": "Autre"
             },
             "Label": { "Language": "Langue" },
@@ -823,7 +823,7 @@
             "Header": {
                 "Appearance": "Apariencia",
                 "Lua": "Ajustes Lua YimMenu",
-                "Luav2": "Ajustes Lua YimMenuV2",
+                "LuaV2": "Ajustes Lua YimMenuV2",
                 "Other": "Otros"
             },
             "Label": { "Language": "Idioma" },
@@ -1000,7 +1000,7 @@
             "Header": {
                 "Appearance": "Aparência",
                 "Lua": "Configurações Lua YimMenu",
-                "Luav2": "Configurações Lua YimMenuV2",
+                "LuaV2": "Configurações Lua YimMenuV2",
                 "Other": "Outros"
             },
             "Label": { "Language": "Idioma" },
@@ -1177,7 +1177,7 @@
             "Header": {
                 "Appearance": "Wygląd",
                 "Lua": "Ustawienia Lua YimMenu",
-                "Luav2": "Ustawienia Lua YimMenuV2",
+                "LuaV2": "Ustawienia Lua YimMenuV2",
                 "Other": "Inne"
             },
             "Label": { "Language": "Język" },
@@ -1354,7 +1354,7 @@
             "Header": {
                 "Appearance": "Внешний вид",
                 "Lua": "Настройки Lua YimMenu",
-                "Luav2": "Настройки Lua YimMenuV2",
+                "LuaV2": "Настройки Lua YimMenuV2",
                 "Other": "Прочее"
             },
             "Label": { "Language": "Язык" },
@@ -1531,7 +1531,7 @@
             "Header": {
                 "Appearance": "Вигляд",
                 "Lua": "Налаштування Lua YimMenu",
-                "Luav2": "Налаштування Lua YimMenuV2",
+                "LuaV2": "Налаштування Lua YimMenuV2",
                 "Other": "Інше"
             },
             "Label": { "Language": "Мова" },
@@ -1708,7 +1708,7 @@
             "Header": {
                 "Appearance": "Görünüm",
                 "Lua": "YimMenu Lua Ayarları",
-                "Luav2": "YimMenuV2 Lua Ayarları",
+                "LuaV2": "YimMenuV2 Lua Ayarları",
                 "Other": "Diğer"
             },
             "Label": { "Language": "Dil (Language)" },
@@ -1885,7 +1885,7 @@
             "Header": {
                 "Appearance": "外观",
                 "Lua": "YimMenu Lua 设置",
-                "Luav2": "YimMenuV2 Lua 设置",
+                "LuaV2": "YimMenuV2 Lua 设置",
                 "Other": "其他"
             },
             "Label": { "Language": "语言 (Language)" },
@@ -2062,7 +2062,7 @@
             "Header": {
                 "Appearance": "外觀",
                 "Lua": "YimMenu Lua 設定",
-                "Luav2": "YimMenuV2 Lua 設定",
+                "LuaV2": "YimMenuV2 Lua 設定",
                 "Other": "其他"
             },
             "Label": { "Language": "語言 (Language)" },
@@ -2239,7 +2239,7 @@
             "Header": {
                 "Appearance": "外観",
                 "Lua": "YimMenu Lua 設定",
-                "Luav2": "YimMenuV2 Lua 設定",
+                "LuaV2": "YimMenuV2 Lua 設定",
                 "Other": "その他"
             },
             "Label": { "Language": "言語 (Language)" },
