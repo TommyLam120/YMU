@@ -3129,12 +3129,12 @@ class SettingsPage(QWidget):
         # Bug report and feature request
         btn_report_bug.clicked.connect(
             lambda: self._open_link(
-                "https://github.com/NiiV3AU/YMU/issues/new?template=bug_report.yml"
+                "https://github.com/tommylam120/YMU/issues/new?template=bug_report.yml"
             )
         )
         btn_request_feature.clicked.connect(
             lambda: self._open_link(
-                "https://github.com/NiiV3AU/YMU/issues/new?template=feature_request.yml"
+                "https://github.com/tommylam120/YMU/issues/new?template=feature_request.yml"
             )
         )
         btn_discover_luas.clicked.connect(
