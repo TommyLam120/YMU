@@ -129,7 +129,7 @@ FALLBACK_DATA = {
             "Header": {
                 "Appearance": "Appearance",
                 "Lua": "YimMenu Lua Settings",
-                "Luav2": "YimMenuV2 Lua Settings",
+                "LuaV2": "YimMenuV2 Lua Settings",
                 "Other": "Other",
             },
             "Label": {"Language": "Language"},
