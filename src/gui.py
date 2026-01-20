@@ -86,6 +86,8 @@ from paths import (
     YIMMENU_APPDATA_DIR,
     YMU_APPDATA_DIR,
     YIMMENU_SCRIPTS_DIR,
+    YIMMENUV2_APPDATA_DIR,  # 新增
+    YIMMENUV2_SCRIPTS_DIR,  # 新增
     LOCAL_VERSION,
 )
 from worker_manager import WorkerManager
@@ -2703,6 +2705,11 @@ class SettingsPage(QWidget):
         self.worker_manager = worker_manager
         self.loc_manager = loc_manager
         self._is_task_running = False
+        
+        # 初始化 YimMenu 版本选择器
+        self.current_yim_version = "v1"  # 默认使用 YimMenu v1
+        self.current_scripts_dir = YIMMENU_SCRIPTS_DIR
+        self.current_disabled_dir = os.path.join(YIMMENU_SCRIPTS_DIR, "disabled")
 
         scroll_content_widget = QWidget()
         scroll_content_widget.setObjectName("ScrollContainer")
@@ -2710,6 +2717,7 @@ class SettingsPage(QWidget):
         content_layout.setContentsMargins(20, 20, 20, 20)
         content_layout.setSpacing(15)
 
+        # --- Appearance Frame ---
         appearance_frame = QFrame()
         appearance_frame.setObjectName("CardFrame")
         appearance_layout = QVBoxLayout(appearance_frame)
@@ -2719,6 +2727,7 @@ class SettingsPage(QWidget):
         )
         appearance_title.setObjectName("SettingsTitle")
 
+        # Theme buttons
         theme_button_layout = QHBoxLayout()
         self.theme_group = QButtonGroup()
         self.theme_group.setExclusive(True)
@@ -2769,6 +2778,27 @@ class SettingsPage(QWidget):
         theme_button_layout.addWidget(btn_dark_theme)
         theme_button_layout.addWidget(btn_light_theme)
 
+        # YimMenu Version Selector
+        yim_version_layout = QHBoxLayout()
+        yim_version_label = QLabel(self.loc_manager.tr("Settings.Label.YimVersion", "YimMenu Version"))
+        
+        self.yim_version_combo = QComboBox()
+        self.yim_version_combo.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.yim_version_combo.setFixedWidth(180)
+        self.yim_version_combo.addItems(["YimMenu (Legacy)", "YimMenuV2 (Enhanced)"])
+        self.yim_version_combo.setToolTip(
+            self.loc_manager.tr(
+                "Settings.Tooltip.YimVersion",
+                "Select which version of YimMenu to manage Lua scripts for"
+            )
+        )
+        self.yim_version_combo.currentTextChanged.connect(self._on_yim_version_changed)
+
+        yim_version_layout.addWidget(yim_version_label)
+        yim_version_layout.addStretch()
+        yim_version_layout.addWidget(self.yim_version_combo)
+
+        # Language settings
         lang_layout = QHBoxLayout()
         lang_label = QLabel(self.loc_manager.tr("Settings.Label.Language", "Language"))
 
@@ -2825,20 +2855,27 @@ class SettingsPage(QWidget):
         lang_layout.addSpacing(10)
         lang_layout.addWidget(self.lang_combo)
 
+        # Add all to appearance layout
         appearance_layout.addWidget(appearance_title)
         appearance_layout.addLayout(theme_button_layout)
         appearance_layout.addSpacing(10)
+        appearance_layout.addLayout(yim_version_layout)
+        appearance_layout.addSpacing(10)
         appearance_layout.addLayout(lang_layout)
 
+        # --- Lua Settings Frame ---
         color_normal_lua = ("#8B8B8B", "#555555")
         color_hover_lua = ("#E0E0E0", "#121212")
         lua_frame = QFrame()
         lua_frame.setObjectName("CardFrame")
         lua_layout = QVBoxLayout(lua_frame)
 
-        lua_title = QLabel(self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings"))
-        lua_title.setObjectName("SettingsTitle")
+        self.lua_title = QLabel(
+            self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings")
+        )
+        self.lua_title.setObjectName("SettingsTitle")
 
+        # Auto-reload toggle
         auto_reload_layout = QHBoxLayout()
         self.auto_reload_label = QLabel(
             self.loc_manager.tr(
@@ -2857,9 +2894,10 @@ class SettingsPage(QWidget):
         auto_reload_layout.addStretch()
         auto_reload_layout.addWidget(self.auto_reload_toggle)
 
-        lua_layout.addWidget(lua_title)
+        lua_layout.addWidget(self.lua_title)
         lua_layout.addLayout(auto_reload_layout)
 
+        # Lua script manager
         manager_grid_layout = QGridLayout()
 
         disabled_label = QLabel(
@@ -2952,6 +2990,7 @@ class SettingsPage(QWidget):
         manager_grid_layout.setColumnStretch(1, 1)
         manager_grid_layout.setColumnStretch(2, 4)
 
+        # Lua footer buttons
         link_button_colors = {
             "color_normal": ("#8B8B8B", "#555555"),
             "color_hover": ("#E0E0E0", "#121212"),
@@ -2996,6 +3035,7 @@ class SettingsPage(QWidget):
         lua_layout.addSpacing(10)
         lua_layout.addLayout(footer_layout)
 
+        # --- Other Settings Frame ---
         other_frame = QFrame()
         other_frame.setObjectName("CardFrame")
         other_layout = QVBoxLayout(other_frame)
@@ -3003,6 +3043,7 @@ class SettingsPage(QWidget):
         other_title = QLabel(self.loc_manager.tr("Settings.Header.Other", "Other"))
         other_title.setObjectName("SettingsTitle")
 
+        # Debug console toggle
         debug_console_layout = QHBoxLayout()
         self.debug_console_label = QLabel(
             self.loc_manager.tr(
@@ -3020,6 +3061,7 @@ class SettingsPage(QWidget):
         debug_console_layout.addStretch()
         debug_console_layout.addWidget(self.debug_console_toggle)
 
+        # Folder buttons
         btn_open_folder = StatefulButton(
             f"  {self.loc_manager.tr('Settings.Btn.OpenYimFolder', 'Open YimMenu Folder')}",
             theme_manager=self.theme_manager,
@@ -3032,6 +3074,21 @@ class SettingsPage(QWidget):
             self.loc_manager.tr(
                 "Settings.Tooltip.OpenYimFolder",
                 "Open YimMenu folder (%APPDATA%/YimMenu)",
+            )
+        )
+
+        btn_open_v2_folder = StatefulButton(
+            f"  {self.loc_manager.tr('Settings.Btn.OpenYimV2Folder', 'Open YimMenuV2 Folder')}",
+            theme_manager=self.theme_manager,
+            icon_path=resource_path(os.path.join("assets", "icons", "folder.svg")),
+            **link_button_colors,
+        )
+        btn_open_v2_folder.setObjectName("LinkButton")
+        btn_open_v2_folder.setIconSize(QSize(20, 20))
+        btn_open_v2_folder.setToolTip(
+            self.loc_manager.tr(
+                "Settings.Tooltip.OpenYimV2Folder",
+                "Open YimMenuV2 folder (%APPDATA%/YimMenuV2)",
             )
         )
 
@@ -3082,13 +3139,18 @@ class SettingsPage(QWidget):
                 "Open the feature request page on GitHub in your browser",
             )
         )
+        
+        # Update check button
         self.btn_check_for_updates = AnimatedButton(
             self.loc_manager.tr("Settings.Btn.CheckUpdates", "Check for YMU Updates"),
             theme_manager=self.theme_manager,
         )
+
+        # Add all to other layout
         other_layout.addWidget(other_title)
         other_layout.addLayout(debug_console_layout)
         other_layout.addWidget(btn_open_folder)
+        other_layout.addWidget(btn_open_v2_folder)  # 新增的 YimMenuV2 文件夹按钮
         other_layout.addWidget(btn_open_ymu_folder)
         other_layout.addWidget(btn_report_bug)
         other_layout.addWidget(btn_request_feature)
@@ -3097,11 +3159,13 @@ class SettingsPage(QWidget):
             self.btn_check_for_updates, alignment=Qt.AlignmentFlag.AlignCenter
         )
 
+        # Add all frames to content layout
         content_layout.addWidget(appearance_frame)
         content_layout.addWidget(lua_frame)
         content_layout.addWidget(other_frame)
         content_layout.addStretch()
 
+        # Setup scroll area
         scroll_area = QScrollArea()
         scroll_area.setObjectName("SettingsScrollArea")
         scroll_area.setWidgetResizable(True)
@@ -3111,9 +3175,14 @@ class SettingsPage(QWidget):
         page_layout.setContentsMargins(0, 0, 0, 0)
         page_layout.addWidget(scroll_area)
 
+        # --- Connect Signals ---
+        # Folder buttons
         btn_open_folder.clicked.connect(lambda: self._open_link(YIMMENU_APPDATA_DIR))
+        btn_open_v2_folder.clicked.connect(lambda: self._open_link(YIMMENUV2_APPDATA_DIR))  # 新增
         btn_open_ymu_folder.clicked.connect(lambda: self._open_link(YMU_APPDATA_DIR))
+        btn_open_scripts_folder.clicked.connect(self._open_current_scripts_folder)
 
+        # Bug report and feature request
         btn_report_bug.clicked.connect(
             lambda: self._open_link(
                 "https://github.com/NiiV3AU/YMU/issues/new?template=bug_report.yml"
@@ -3124,7 +3193,14 @@ class SettingsPage(QWidget):
                 "https://github.com/NiiV3AU/YMU/issues/new?template=feature_request.yml"
             )
         )
+        btn_discover_luas.clicked.connect(
+            lambda: self._open_link("https://github.com/orgs/YimMenu-Lua/repositories")
+        )
+
+        # Update check
         self.btn_check_for_updates.clicked.connect(self._handle_check_for_updates)
+        
+        # Toggle switches
         self.auto_reload_toggle.toggled.connect(self._on_auto_reload_toggled)
         self.debug_console_toggle.toggled.connect(self._on_debug_console_toggled)
         self.auto_reload_toggle.focusChanged.connect(
@@ -3137,18 +3213,78 @@ class SettingsPage(QWidget):
                 self.debug_console_label, has_focus
             )
         )
+        
+        # Lua script management
         btn_enable_script.clicked.connect(self._enable_selected_scripts)
         btn_disable_script.clicked.connect(self._disable_selected_scripts)
-        btn_open_scripts_folder.clicked.connect(
-            lambda: self._open_link(YIMMENU_SCRIPTS_DIR)
-        )
         self.btn_refresh_luas.clicked.connect(self._refresh_lua_lists)
-        btn_discover_luas.clicked.connect(
-            lambda: self._open_link("https://github.com/orgs/YimMenu-Lua/repositories")
-        )
 
+        # Initial setup
         self._refresh_lua_lists()
         self._load_initial_settings()
+
+    def _on_yim_version_changed(self, version_text):
+        """当 YimMenu 版本选择改变时"""
+        if "V2" in version_text.upper():
+            self.current_yim_version = "v2"
+            self.current_scripts_dir = YIMMENUV2_SCRIPTS_DIR
+            self.current_disabled_dir = os.path.join(YIMMENUV2_SCRIPTS_DIR, "disabled")
+            title = self.loc_manager.tr("Settings.Header.LuaV2", "YimMenuV2 Lua Settings")
+        else:
+            self.current_yim_version = "v1"
+            self.current_scripts_dir = YIMMENU_SCRIPTS_DIR
+            self.current_disabled_dir = os.path.join(YIMMENU_SCRIPTS_DIR, "disabled")
+            title = self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings")
+        
+        self.lua_title.setText(title)
+        self._refresh_lua_lists()
+
+    def _open_current_scripts_folder(self):
+        """打开当前选择的 YimMenu 版本的脚本文件夹"""
+        self._open_link(self.current_scripts_dir)
+
+    def _get_current_scripts(self):
+        """获取当前选择的 YimMenu 版本的脚本列表"""
+        enabled = []
+        disabled = []
+        
+        # 获取启用的脚本
+        if os.path.exists(self.current_scripts_dir):
+            for file in os.listdir(self.current_scripts_dir):
+                if file.endswith('.lua'):
+                    enabled.append(file)
+        
+        # 获取禁用的脚本
+        if os.path.exists(self.current_disabled_dir):
+            for file in os.listdir(self.current_disabled_dir):
+                if file.endswith('.lua'):
+                    disabled.append(file)
+        
+        return {"enabled": sorted(enabled), "disabled": sorted(disabled)}
+
+    def _enable_script(self, script_name):
+        """启用脚本（从禁用文件夹移动到启用文件夹）"""
+        import shutil
+        src = os.path.join(self.current_disabled_dir, script_name)
+        dst = os.path.join(self.current_scripts_dir, script_name)
+        
+        if os.path.exists(src):
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.move(src, dst)
+            return True
+        return False
+
+    def _disable_script(self, script_name):
+        """禁用脚本（从启用文件夹移动到禁用文件夹）"""
+        import shutil
+        src = os.path.join(self.current_scripts_dir, script_name)
+        dst = os.path.join(self.current_disabled_dir, script_name)
+        
+        if os.path.exists(src):
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.move(src, dst)
+            return True
+        return False
 
     def _open_link(self, path_or_url: str):
         """Opens a local folder path or a web URL."""
@@ -3189,14 +3325,13 @@ class SettingsPage(QWidget):
 
     def _refresh_lua_lists(self):
         """Fetches script lists, updates UI, and plays a brief feedback animation."""
-
         self.btn_refresh_luas.start_animation(duration=500)
         self.btn_refresh_luas.setEnabled(False)
 
         self.disabled_scripts_list.clear()
         self.enabled_scripts_list.clear()
 
-        scripts = lua_manager.get_scripts()
+        scripts = self._get_current_scripts()
         self.disabled_scripts_list.addItems(scripts["disabled"])
         self.enabled_scripts_list.addItems(scripts["enabled"])
 
@@ -3227,7 +3362,7 @@ class SettingsPage(QWidget):
             return
 
         for item in selected_items:
-            lua_manager.enable_script(item.text())
+            self._enable_script(item.text())
 
         self._refresh_lua_lists()
 
@@ -3238,7 +3373,7 @@ class SettingsPage(QWidget):
             return
 
         for item in selected_items:
-            lua_manager.disable_script(item.text())
+            self._disable_script(item.text())
 
         self._refresh_lua_lists()
 
