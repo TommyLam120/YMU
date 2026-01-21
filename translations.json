@@ -114,11 +114,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Appearance",
-                "Lua": "YimMenu Lua Settings",
-                "LuaV2": "YimMenuV2 Lua Settings",
+                "Lua": "Lua Settings",
                 "Other": "Other"
             },
             "Label": { "Language": "Language" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua Settings" },
             "Theme": { "Dark": "Dark", "Light": "Light" },
             "Lua": {
                 "AutoReload": "Auto-reload changed scripts",
@@ -291,11 +291,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Design",
-                "Lua": "YimMenu Lua Einstellungen",
-                "LuaV2": "YimMenuV2 Lua Einstellungen",
+                "Lua": "Lua Einstellungen",
                 "Other": "Sonstiges"
             },
             "Label": { "Language": "Sprache" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua Einstellungen" },
             "Theme": { "Dark": "Dunkel", "Light": "Hell" },
             "Lua": {
                 "AutoReload": "Geänderte Skripte auto-reloaden",
@@ -462,17 +462,17 @@
                 "NoRockstarPath": "Kon Rockstar Games installatiepad niet vinden.",
                 "NoExeFound": "Executable niet gevonden in '{0}'",
                 "LaunchFailed": "Fout bij starten game. Zie logs voor details.",
-                "AccessDenied": "Geen rechten om te injecten in GTA V.\nProbeer YMU als administrator te herstarten."
+                "AccessDenied": "Geen rechten om te injecteren in GTA V.\nProbeer YMU als administrator te herstarten."
             }
         },
         "Settings": {
             "Header": {
                 "Appearance": "Uiterlijk",
-                "Lua": "YimMenu Lua Instellingen",
-                "LuaV2": "YimMenuV2 Lua Instellingen",
+                "Lua": "Lua Instellingen",
                 "Other": "Overig"
             },
             "Label": { "Language": "Taal" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua Instellingen" },
             "Theme": { "Dark": "Donker", "Light": "Licht" },
             "Lua": {
                 "AutoReload": "Gewijzigde scripts auto-reloaden",
@@ -645,11 +645,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Apparence",
-                "Lua": "Paramètres Lua YimMenu",
-                "LuaV2": "Paramètres Lua YimMenuV2",
+                "Lua": "Paramètres Lua",
                 "Other": "Autre"
             },
             "Label": { "Language": "Langue" },
+            "Label1": { "YimVersion": "Paramètres Lua de YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Sombre", "Light": "Clair" },
             "Lua": {
                 "AutoReload": "Recharger auto. les scripts modifiés",
@@ -822,11 +822,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Apariencia",
-                "Lua": "Ajustes Lua YimMenu",
-                "LuaV2": "Ajustes Lua YimMenuV2",
+                "Lua": "Ajustes Lua",
                 "Other": "Otros"
             },
             "Label": { "Language": "Idioma" },
+            "Label1": { "YimVersion": "Ajustes Lua de YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Oscuro", "Light": "Claro" },
             "Lua": {
                 "AutoReload": "Recargar auto. scripts modificados",
@@ -999,11 +999,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Aparência",
-                "Lua": "Configurações Lua YimMenu",
-                "LuaV2": "Configurações Lua YimMenuV2",
+                "Lua": "Configurações Lua",
                 "Other": "Outros"
             },
             "Label": { "Language": "Idioma" },
+            "Label1": { "YimVersion": "Configurações Lua do YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Escuro", "Light": "Claro" },
             "Lua": {
                 "AutoReload": "Auto-reload em scripts alterados",
@@ -1176,11 +1176,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Wygląd",
-                "Lua": "Ustawienia Lua YimMenu",
-                "LuaV2": "Ustawienia Lua YimMenuV2",
+                "Lua": "Ustawienia Lua",
                 "Other": "Inne"
             },
             "Label": { "Language": "Język" },
+            "Label1": { "YimVersion": "Ustawienia Lua YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Ciemny", "Light": "Jasny" },
             "Lua": {
                 "AutoReload": "Auto-reload zmienionych skryptów",
@@ -1353,11 +1353,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Внешний вид",
-                "Lua": "Настройки Lua YimMenu",
-                "LuaV2": "Настройки Lua YimMenuV2",
+                "Lua": "Настройки Lua",
                 "Other": "Прочее"
             },
             "Label": { "Language": "Язык" },
+            "Label1": { "YimVersion": "Настройки Lua YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Темная", "Light": "Светлая" },
             "Lua": {
                 "AutoReload": "Авто-релоад скриптов",
@@ -1530,11 +1530,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Вигляд",
-                "Lua": "Налаштування Lua YimMenu",
-                "LuaV2": "Налаштування Lua YimMenuV2",
+                "Lua": "Налаштування Lua",
                 "Other": "Інше"
             },
             "Label": { "Language": "Мова" },
+            "Label1": { "YimVersion": "Налаштування Lua YimMenu / YimMenuV2" },
             "Theme": { "Dark": "Темна", "Light": "Світла" },
             "Lua": {
                 "AutoReload": "Авто-релоад скриптів",
@@ -1707,11 +1707,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "Görünüm",
-                "Lua": "YimMenu Lua Ayarları",
-                "LuaV2": "YimMenuV2 Lua Ayarları",
+                "Lua": "Lua Ayarları",
                 "Other": "Diğer"
             },
             "Label": { "Language": "Dil (Language)" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua Ayarları" },
             "Theme": { "Dark": "Karanlık", "Light": "Aydınlık" },
             "Lua": {
                 "AutoReload": "Değişen scriptleri otomatik yenile",
@@ -1884,11 +1884,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "外观",
-                "Lua": "YimMenu Lua 设置",
-                "LuaV2": "YimMenuV2 Lua 设置",
+                "Lua": "Lua 设置",
                 "Other": "其他"
             },
             "Label": { "Language": "语言 (Language)" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua 设置" },
             "Theme": { "Dark": "深色", "Light": "浅色" },
             "Lua": {
                 "AutoReload": "自动重载变更的脚本",
@@ -2061,11 +2061,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "外觀",
-                "Lua": "YimMenu Lua 設定",
-                "LuaV2": "YimMenuV2 Lua 設定",
+                "Lua": "Lua 設定",
                 "Other": "其他"
             },
             "Label": { "Language": "語言 (Language)" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua 設定" },
             "Theme": { "Dark": "深色", "Light": "淺色" },
             "Lua": {
                 "AutoReload": "自動重新載入變更的腳本",
@@ -2238,11 +2238,11 @@
         "Settings": {
             "Header": {
                 "Appearance": "外観",
-                "Lua": "YimMenu Lua 設定",
-                "LuaV2": "YimMenuV2 Lua 設定",
+                "Lua": "Lua 設定",
                 "Other": "その他"
             },
             "Label": { "Language": "言語 (Language)" },
+            "Label1": { "YimVersion": "YimMenu / YimMenuV2 Lua 設定" },
             "Theme": { "Dark": "ダーク", "Light": "ライト" },
             "Lua": {
                 "AutoReload": "変更されたスクリプトを自動リロード",
