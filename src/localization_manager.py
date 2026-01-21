@@ -134,7 +134,7 @@ FALLBACK_DATA = {
                 "Other": "Other",
             },
             "Label": {"Language": "Language"},
-            "Label1": {"YimVersion":"YimMenu / YimMenuV2 Lua Settings"},
+            "Label1": {"YimVersion":"Management Lua Settings"},
             "Theme": {"Dark": "Dark", "Light": "Light"},
             "Lua": {
                 "AutoReload": "Auto-reload changed scripts",
