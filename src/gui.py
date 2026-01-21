@@ -2795,7 +2795,7 @@ class SettingsPage(QWidget):
         self.yim_version_combo.setToolTip(
             self.loc_manager.tr(
                 "Settings.Tooltip.YimVersion",
-                "Select the YimMenu version / YimMenuV2 version for which you want to manage Lua scripts"
+                "Select the YimMenu / YimMenuV2 for which you want to manage Lua scripts"
             )
         )
         self.yim_version_combo.currentTextChanged.connect(self._on_yim_version_changed)
