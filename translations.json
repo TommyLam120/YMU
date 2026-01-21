@@ -1538,7 +1538,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Вигляд",
-                "Lua": "YimMenu Lua Налаштування",,
+                "Lua": "YimMenu Lua Налаштування",
                 "LuaV2": "YimMenuV2 Lua Налаштування",
                 "Other": "Інше"
             },
@@ -1716,7 +1716,7 @@
         "Settings": {
             "Header": {
                 "Appearance": "Görünüm",
-                "Lua": "YimMenu Lua Ayarları",,
+                "Lua": "YimMenu Lua Ayarları",
                 "LuaV2": "YimMenuV2 Lua Ayarları",
                 "Other": "Diğer"
             },
