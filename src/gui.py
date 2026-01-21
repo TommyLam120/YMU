@@ -2786,7 +2786,7 @@ class SettingsPage(QWidget):
 
         # YimMenu Version Selector
         yim_version_layout = QHBoxLayout()
-        yim_version_label = QLabel(self.loc_manager.tr("Settings.Label.YimVersion", "YimMenu Version"))
+        yim_version_label = QLabel(self.loc_manager.tr("Settings.Label1.YimVersion", "YimMenu / YimMenuV2 Lua Settings"))
         
         self.yim_version_combo = QComboBox()
         self.yim_version_combo.setCursor(Qt.CursorShape.PointingHandCursor)
