@@ -1665,13 +1665,13 @@ class MainWindow(QMainWindow):
             theme_manager=self.theme_manager,
         )
         footer_button.setObjectName("SidebarFooter")
-        footer_button.clicked.connect(lambda: webbrowser.open("https://ymu.pages.dev/"))
-        footer_button.setToolTip(
-            self.loc_manager.tr(
-                "Sidebar.Tooltip.ProjectPage",
-                "Open the YMU project page in your browser",
-            )
-        )
+        #footer_button.clicked.connect(lambda: webbrowser.open("https://ymu.pages.dev/"))
+        #footer_button.setToolTip(
+         #   self.loc_manager.tr(
+          #      "Sidebar.Tooltip.ProjectPage",
+           #     "Open the YMU project page in your browser",
+            #)
+       # )
 
         layout.addWidget(footer_button)
 
@@ -2357,6 +2357,10 @@ class InjectPage(QWidget):
             self.inject_button.setText(
                 self.loc_manager.tr("Inject.Btn.NoDll", "No DLL found")
             )
+            # 當沒有 DLL 時，設置預設的 GTA 啟動按鈕文字
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
             self.inject_button.setEnabled(False)
 
         elif len(found_dlls) == 1:
@@ -2364,6 +2368,8 @@ class InjectPage(QWidget):
             self.dll_to_inject = found_dlls[0]
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(cleaned_names[0]))
+            # 根據 DLL 版本設置 GTA 啟動按鈕文字
+            self._update_start_button_text(cleaned_names[0])
 
         else:
             self.dll_select.addItems(cleaned_names)
@@ -2372,6 +2378,8 @@ class InjectPage(QWidget):
             self.dll_to_inject = f"{current_cleaned_name}.dll"
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(current_cleaned_name))
+            # 根據 DLL 版本設置 GTA 啟動按鈕文字
+            self._update_start_button_text(current_cleaned_name)
 
         self._update_ui_for_state()
 
@@ -2383,10 +2391,40 @@ class InjectPage(QWidget):
             self.inject_button.setText(fmt.format(cleaned_name))
 
             self.dll_to_inject = f"{cleaned_name}.dll"
+            # 根據選擇的 DLL 更新 GTA 啟動按鈕文字
+            self._update_start_button_text(cleaned_name)
         self._update_ui_for_state()
+
+    def _update_start_button_text(self, dll_name: str):
+        """根據 DLL 名稱更新 Start GTA 按鈕的文字"""
+        launcher = self.launcher_select.currentText()
+        
+        # 只有當選擇 Epic Games 啟動器時才顯示不同文字
+        if launcher == "Epic Games":
+            if dll_name == "YimMenuV2":
+                self.start_gta_button.setText(
+                    self.loc_manager.tr("Inject.Btn.StartGtaV2", "Start GTA 5 Enhanced")
+                )
+            else:
+                self.start_gta_button.setText(
+                    self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+                )
+        else:
+            # 其他啟動器使用預設文字
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
 
     def _on_launcher_selection_changed(self):
         """Enables or disables the start button based on the dropdown selection."""
+        # 更新 DLL 選擇後，也要更新按鈕文字
+        if self.dll_to_inject:
+            dll_base = os.path.splitext(self.dll_to_inject)[0]
+            self._update_start_button_text(dll_base)
+        else:
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
         self._update_ui_for_state()
 
     def show_inject_info_dialog(self):
@@ -2483,13 +2521,37 @@ class InjectPage(QWidget):
         """Contains the actual logic for launching the game."""
         launcher = self.launcher_select.currentText()
         logger.info(f"Attempting to launch GTA 5 via {launcher} launcher.")
-
+        
+        # 根據選擇的DLL版本決定Epic Games URI
+        epic_games_uris = {
+            "YimMenu": "com.epicgames.launcher://apps/0584d2013f0149a791e7b9bad0eec102%3A6e563a2c0f5f46e3b4e88b5f4ed50cca%3A9d2d0eb64d5c44529cece33fe2a46482?action=launch&silent=true",
+            "YimMenuV2": "com.epicgames.launcher://apps/b0cd075465c44f87be3b505ac04a2e46%3A122e5e90b7b8424d930be8bc1a7e05fb%3A8769e24080ea413b8ebca3f1b8c50951?action=launch&silent=true",
+        }
+        
         launch_uris = {
             "Steam": "steam://run/271590",
-            "Epic Games": "com.epicgames.launcher://apps/0584d2013f0149a791e7b9bad0eec102%3A6e563a2c0f5f46e3b4e88b5f4ed50cca%3A9d2d0eb64d5c44529cece33fe2a46482?action=launch&silent=true",
-            "Rockstar Games": None,  # Special handling
+            "Epic Games": None,  # 將在下面根據DLL版本設置
+            "Rockstar Games": None,  # 特殊處理
         }
-
+        
+        # 如果選擇Epic Games，根據選擇的DLL決定URI
+        if launcher == "Epic Games":
+            if self.dll_to_inject:
+                dll_base = os.path.splitext(self.dll_to_inject)[0]  # 獲取不帶擴展名的文件名
+                uri = epic_games_uris.get(dll_base)
+                
+                if uri:
+                    launch_uris["Epic Games"] = uri
+                    logger.info(f"Using Epic URI for {dll_base}")
+                else:
+                    # 默認使用YimMenuV2
+                    launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
+                    logger.warning(f"No specific URI for {dll_base}, using YimMenuV2")
+            else:
+                # 默認使用YimMenuV2
+                launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
+                logger.info("No DLL selected, using default YimMenuV2 URI for Epic Games")
+        
         uri = launch_uris.get(launcher)
         if uri:
             try:

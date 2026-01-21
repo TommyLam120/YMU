@@ -94,6 +94,7 @@ FALLBACK_DATA = {
             "Launcher": {"Select": "Select Launcher"},
             "Btn": {
                 "StartGta": "Start GTA 5",
+                "StartGtaV2":"Start GTA 5 Enhanced",
                 "InjectBase": "Inject YimMenu",
                 "NoDll": "No DLL found",
                 "InjectFile": "Inject {0}",
