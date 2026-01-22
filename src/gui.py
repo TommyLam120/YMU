@@ -2784,26 +2784,6 @@ class SettingsPage(QWidget):
         theme_button_layout.addWidget(btn_dark_theme)
         theme_button_layout.addWidget(btn_light_theme)
 
-        # YimMenu Version Selector
-        yim_version_layout = QHBoxLayout()
-        yim_version_label = QLabel(self.loc_manager.tr("Settings.Label1.YimVersion", " Management Lua Settings"))
-        
-        self.yim_version_combo = QComboBox()
-        self.yim_version_combo.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.yim_version_combo.setFixedWidth(180)
-        self.yim_version_combo.addItems(["YimMenu (Legacy)", "YimMenuV2 (Enhanced)"])
-        self.yim_version_combo.setToolTip(
-            self.loc_manager.tr(
-                "Settings.Tooltip.YimVersion",
-                "Select the YimMenu / YimMenuV2 for which you want to manage Lua scripts"
-            )
-        )
-        self.yim_version_combo.currentTextChanged.connect(self._on_yim_version_changed)
-
-        yim_version_layout.addWidget(yim_version_label)
-        yim_version_layout.addStretch()
-        yim_version_layout.addWidget(self.yim_version_combo)
-
         # Language settings
         lang_layout = QHBoxLayout()
         lang_label = QLabel(self.loc_manager.tr("Settings.Label.Language", "Language"))
@@ -2865,7 +2845,6 @@ class SettingsPage(QWidget):
         appearance_layout.addWidget(appearance_title)
         appearance_layout.addLayout(theme_button_layout)
         appearance_layout.addSpacing(10)
-        appearance_layout.addLayout(yim_version_layout)
         appearance_layout.addSpacing(10)
         appearance_layout.addLayout(lang_layout)
 
@@ -2880,6 +2859,30 @@ class SettingsPage(QWidget):
             self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings")
         )
         self.lua_title.setObjectName("SettingsTitle")
+
+
+        # YimMenu Version Selector
+        yim_version_layout = QHBoxLayout()
+        self.yim_version_label = QLabel(self.loc_manager.tr("Settings.Label1.YimVersion", " Management Lua Settings"))
+        
+        self.yim_version_combo = QComboBox()
+        self.yim_version_combo.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.yim_version_combo.setFixedWidth(180)
+        self.yim_version_combo.addItems(["YimMenu (Legacy)", "YimMenuV2 (Enhanced)"])
+        self.yim_version_combo.setToolTip(
+            self.loc_manager.tr(
+                "Settings.Tooltip.YimVersion",
+                "Select the YimMenu / YimMenuV2 for which you want to manage Lua scripts"
+            )
+        )
+        self.yim_version_combo.currentTextChanged.connect(self._on_yim_version_changed)
+
+        yim_version_layout.addWidget(self.yim_version_label)
+        yim_version_layout.addStretch()
+        yim_version_layout.addWidget(self.yim_version_combo)
+        lua_layout.addWidget(self.lua_title)
+        lua_layout.addLayout(yim_version_layout)
+
 
         # Auto-reload toggle
         auto_reload_layout = QHBoxLayout()
@@ -2900,7 +2903,7 @@ class SettingsPage(QWidget):
         auto_reload_layout.addStretch()
         auto_reload_layout.addWidget(self.auto_reload_toggle)
 
-        lua_layout.addWidget(self.lua_title)
+        #lua_layout.addWidget(self.lua_title)
         lua_layout.addLayout(auto_reload_layout)
 
         # Lua script manager
