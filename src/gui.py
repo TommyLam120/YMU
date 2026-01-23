@@ -2198,6 +2198,7 @@ class InjectPage(QWidget):
         self.gta_pid = None
         self._state = self.STATE_IDLE
         self.dll_to_inject = None
+        self.last_selected_dll = None  # 新增：記住上次選擇的DLL
 
         info_button = StatefulButton(
             "",
@@ -2295,7 +2296,8 @@ class InjectPage(QWidget):
     def showEvent(self, event):
         """Called every time the page becomes visible."""
         super().showEvent(event)
-        self._update_dll_selector()
+        # 使用新的方法，會記住上次選擇
+        self._update_dll_selector_with_memory()
         self.process_checker_timer.start()
         logger.debug("InjectPage shown, started process checker timer.")
 
@@ -2366,6 +2368,7 @@ class InjectPage(QWidget):
         elif len(found_dlls) == 1:
             self.dll_select.setVisible(False)
             self.dll_to_inject = found_dlls[0]
+            self.last_selected_dll = found_dlls[0]  # 記住選擇
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(cleaned_names[0]))
             # 根據 DLL 版本設置 GTA 啟動按鈕文字
@@ -2374,13 +2377,105 @@ class InjectPage(QWidget):
         else:
             self.dll_select.addItems(cleaned_names)
             self.dll_select.setVisible(True)
-            current_cleaned_name = self.dll_select.currentText()
+            
+            # 如果上次有選擇，嘗試恢復上次的選擇
+            if self.last_selected_dll:
+                dll_base = os.path.splitext(self.last_selected_dll)[0]
+                index = cleaned_names.index(dll_base) if dll_base in cleaned_names else 0
+                self.dll_select.setCurrentIndex(index)
+                current_cleaned_name = self.dll_select.currentText()
+            else:
+                current_cleaned_name = self.dll_select.currentText()
+                
             self.dll_to_inject = f"{current_cleaned_name}.dll"
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(current_cleaned_name))
             # 根據 DLL 版本設置 GTA 啟動按鈕文字
             self._update_start_button_text(current_cleaned_name)
 
+        self._update_ui_for_state()
+
+    def _update_dll_selector_with_memory(self):
+        """更新DLL選擇器，但記住上次的選擇"""
+        dll_dir = YMU_DLL_DIR
+        os.makedirs(dll_dir, exist_ok=True)
+
+        found_dlls = [f for f in os.listdir(dll_dir) if f.lower().endswith(".dll")]
+        cleaned_names = [name.removesuffix(".dll") for name in found_dlls]
+
+        # 如果沒有DLL文件，清空選擇
+        if len(found_dlls) == 0:
+            self.dll_select.clear()
+            self.dll_select.setVisible(False)
+            self.dll_to_inject = None
+            self.last_selected_dll = None
+            self.inject_button.setText(
+                self.loc_manager.tr("Inject.Btn.NoDll", "No DLL found")
+            )
+            self.start_gta_button.setText(
+                self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
+            )
+            self.inject_button.setEnabled(False)
+            self._update_ui_for_state()
+            return
+
+        # 只有一個DLL的情況
+        if len(found_dlls) == 1:
+            self.dll_select.setVisible(False)
+            self.dll_to_inject = found_dlls[0]
+            self.last_selected_dll = found_dlls[0]
+            fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
+            self.inject_button.setText(fmt.format(cleaned_names[0]))
+            self._update_start_button_text(cleaned_names[0])
+            self._update_ui_for_state()
+            return
+
+        # 多個DLL的情況
+        self.dll_select.setVisible(True)
+        
+        # 檢查當前列表是否與之前相同
+        current_items = [self.dll_select.itemText(i) for i in range(self.dll_select.count())]
+        if current_items != cleaned_names:
+            # 列表不同，需要更新
+            current_selection = self.dll_select.currentText() if self.dll_select.count() > 0 else None
+            
+            self.dll_select.clear()
+            self.dll_select.addItems(cleaned_names)
+            
+            # 優先使用上次選擇，否則使用當前選擇，否則使用第一個
+            if self.last_selected_dll:
+                dll_base = os.path.splitext(self.last_selected_dll)[0]
+                if dll_base in cleaned_names:
+                    index = cleaned_names.index(dll_base)
+                    self.dll_select.setCurrentIndex(index)
+                    self.dll_to_inject = f"{dll_base}.dll"
+                elif current_selection and current_selection in cleaned_names:
+                    self.dll_select.setCurrentIndex(cleaned_names.index(current_selection))
+                    self.dll_to_inject = f"{current_selection}.dll"
+                else:
+                    self.dll_select.setCurrentIndex(0)
+                    self.dll_to_inject = f"{cleaned_names[0]}.dll"
+            elif current_selection and current_selection in cleaned_names:
+                self.dll_select.setCurrentIndex(cleaned_names.index(current_selection))
+                self.dll_to_inject = f"{current_selection}.dll"
+            else:
+                self.dll_select.setCurrentIndex(0)
+                self.dll_to_inject = f"{cleaned_names[0]}.dll"
+        else:
+            # 列表相同，保持當前選擇
+            if self.last_selected_dll:
+                dll_base = os.path.splitext(self.last_selected_dll)[0]
+                if dll_base in cleaned_names:
+                    index = cleaned_names.index(dll_base)
+                    if self.dll_select.currentIndex() != index:
+                        self.dll_select.setCurrentIndex(index)
+                        self.dll_to_inject = f"{dll_base}.dll"
+        
+        # 更新按鈕文字
+        current_cleaned_name = self.dll_select.currentText()
+        fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
+        self.inject_button.setText(fmt.format(current_cleaned_name))
+        self._update_start_button_text(current_cleaned_name)
         self._update_ui_for_state()
 
     def _on_dll_selection_changed(self, index):
@@ -2391,6 +2486,7 @@ class InjectPage(QWidget):
             self.inject_button.setText(fmt.format(cleaned_name))
 
             self.dll_to_inject = f"{cleaned_name}.dll"
+            self.last_selected_dll = self.dll_to_inject  # 記住選擇
             # 根據選擇的 DLL 更新 GTA 啟動按鈕文字
             self._update_start_button_text(cleaned_name)
         self._update_ui_for_state()
