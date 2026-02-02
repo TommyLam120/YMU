@@ -81,8 +81,8 @@ jobs:
             const tags = await github.rest.repos.listTags({ owner, repo });
             let newVersion;
             if (tags.data.length === 0) {
-              console.log('No existing tags found. Starting with version v1.1.5');
-              newVersion = 'v1.1.5';
+              console.log('No existing tags found. Starting with version v1.1.7');
+              newVersion = 'v1.1.7';
             } else {
               const latestTag = tags.data[0].name;
               const versionParts = latestTag.substring(1).split('.').map(Number);
