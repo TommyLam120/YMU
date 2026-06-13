@@ -3204,7 +3204,7 @@ class SettingsPage(QWidget):
         btn_open_gta_enhanced_settings_folder.setIconSize(QSize(20, 20))
         btn_open_gta_enhanced_settings_folder.setToolTip(
             self.loc_manager.tr(
-                "Settings.Tooltip.OpenGtaEnhancedSettingsFolder", "Open GTA V Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTAV Enhanced)"
+                "Settings.Tooltip.OpenGtaEnhancedSettingsFolder", "Open GTA V Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTA V Enhanced)"
             )
         )
 
