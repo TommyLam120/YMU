@@ -15,7 +15,8 @@ except (ImportError, AttributeError):
 
 # check if an instance is already running -> yes? -> gets focused
 if IS_WINDOWS:
-    WINDOW_TITLE = "YimMenuUpdater | NV3"
+    WINDOW_TITLE = "YimMenuUpdater"
+    #WINDOW_TITLE = "YimMenuUpdater | NV3"
     try:
         hwnd = win32gui.FindWindow(None, WINDOW_TITLE)
         if hwnd != 0:
@@ -80,14 +81,16 @@ from PySide6.QtSvg import QSvgRenderer
 
 # import modules
 from paths import (
+    GTAV_DOCUMENTS_DIR,
+    GTAV_ENHANCED_DOCUMENTS_DIR,
     YMU_LOG_FILE_PATH,
     resource_path,
     YMU_DLL_DIR,
     YIMMENU_APPDATA_DIR,
     YMU_APPDATA_DIR,
     YIMMENU_SCRIPTS_DIR,
-    YIMMENUV2_APPDATA_DIR,  # 新增
-    YIMMENUV2_SCRIPTS_DIR,  # 新增
+    YIMMENUV2_APPDATA_DIR,
+    YIMMENUV2_SCRIPTS_DIR,
     LOCAL_VERSION,
 )
 from worker_manager import WorkerManager
@@ -1519,7 +1522,8 @@ class MainWindow(QMainWindow):
         self.loc_manager = loc_manager
         self.notification_manager = NotificationManager(self, self.theme_manager)
 
-        self.setWindowTitle("YimMenuUpdater | NV3")
+        #self.setWindowTitle("YimMenuUpdater | NV3")
+        self.setWindowTitle("YimMenuUpdater")
         self.setFixedSize(QSize(780, 520))
 
         main_widget = QWidget()
@@ -1665,13 +1669,6 @@ class MainWindow(QMainWindow):
             theme_manager=self.theme_manager,
         )
         footer_button.setObjectName("SidebarFooter")
-        #footer_button.clicked.connect(lambda: webbrowser.open("https://ymu.pages.dev/"))
-        #footer_button.setToolTip(
-         #   self.loc_manager.tr(
-          #      "Sidebar.Tooltip.ProjectPage",
-           #     "Open the YMU project page in your browser",
-            #)
-       # )
 
         layout.addWidget(footer_button)
 
@@ -1788,7 +1785,7 @@ class RiskPage(QWidget):
             )
         )
         yimv2_repo_button.clicked.connect(
-            lambda: webbrowser.open("https://github.com/YimMenu/YimMenuV2")
+            lambda: webbrowser.open("https://github.com/tommylam120/YimMenuV2_Traditional-Chinese")
         )
 
         fsl_thread_button = StatefulButton(
@@ -1839,7 +1836,7 @@ class DownloadPage(QWidget):
     RELEASE_CHANNELS = {
         "YimMenu (Legacy)": {"repo": "Mr-X-GTA/YimMenu", "dll_name": "YimMenu.dll"},
         "YimMenuV2 (Enhanced)": {
-            "repo": "YimMenu/YimMenuV2",
+            "repo": "tommylam120/YimMenuV2_Traditional-Chinese",
             "dll_name": "YimMenuV2.dll",
         },
     }
@@ -2198,7 +2195,7 @@ class InjectPage(QWidget):
         self.gta_pid = None
         self._state = self.STATE_IDLE
         self.dll_to_inject = None
-        self.last_selected_dll = None  # 新增：記住上次選擇的DLL
+        self.last_selected_dll = None
 
         info_button = StatefulButton(
             "",
@@ -2296,7 +2293,6 @@ class InjectPage(QWidget):
     def showEvent(self, event):
         """Called every time the page becomes visible."""
         super().showEvent(event)
-        # 使用新的方法，會記住上次選擇
         self._update_dll_selector_with_memory()
         self.process_checker_timer.start()
         logger.debug("InjectPage shown, started process checker timer.")
@@ -2359,7 +2355,6 @@ class InjectPage(QWidget):
             self.inject_button.setText(
                 self.loc_manager.tr("Inject.Btn.NoDll", "No DLL found")
             )
-            # 當沒有 DLL 時，設置預設的 GTA 啟動按鈕文字
             self.start_gta_button.setText(
                 self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
             )
@@ -2368,17 +2363,15 @@ class InjectPage(QWidget):
         elif len(found_dlls) == 1:
             self.dll_select.setVisible(False)
             self.dll_to_inject = found_dlls[0]
-            self.last_selected_dll = found_dlls[0]  # 記住選擇
+            self.last_selected_dll = found_dlls[0]
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(cleaned_names[0]))
-            # 根據 DLL 版本設置 GTA 啟動按鈕文字
             self._update_start_button_text(cleaned_names[0])
 
         else:
             self.dll_select.addItems(cleaned_names)
             self.dll_select.setVisible(True)
             
-            # 如果上次有選擇，嘗試恢復上次的選擇
             if self.last_selected_dll:
                 dll_base = os.path.splitext(self.last_selected_dll)[0]
                 index = cleaned_names.index(dll_base) if dll_base in cleaned_names else 0
@@ -2390,7 +2383,6 @@ class InjectPage(QWidget):
             self.dll_to_inject = f"{current_cleaned_name}.dll"
             fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
             self.inject_button.setText(fmt.format(current_cleaned_name))
-            # 根據 DLL 版本設置 GTA 啟動按鈕文字
             self._update_start_button_text(current_cleaned_name)
 
         self._update_ui_for_state()
@@ -2403,7 +2395,6 @@ class InjectPage(QWidget):
         found_dlls = [f for f in os.listdir(dll_dir) if f.lower().endswith(".dll")]
         cleaned_names = [name.removesuffix(".dll") for name in found_dlls]
 
-        # 如果沒有DLL文件，清空選擇
         if len(found_dlls) == 0:
             self.dll_select.clear()
             self.dll_select.setVisible(False)
@@ -2419,7 +2410,6 @@ class InjectPage(QWidget):
             self._update_ui_for_state()
             return
 
-        # 只有一個DLL的情況
         if len(found_dlls) == 1:
             self.dll_select.setVisible(False)
             self.dll_to_inject = found_dlls[0]
@@ -2430,19 +2420,15 @@ class InjectPage(QWidget):
             self._update_ui_for_state()
             return
 
-        # 多個DLL的情況
         self.dll_select.setVisible(True)
         
-        # 檢查當前列表是否與之前相同
         current_items = [self.dll_select.itemText(i) for i in range(self.dll_select.count())]
         if current_items != cleaned_names:
-            # 列表不同，需要更新
             current_selection = self.dll_select.currentText() if self.dll_select.count() > 0 else None
             
             self.dll_select.clear()
             self.dll_select.addItems(cleaned_names)
             
-            # 優先使用上次選擇，否則使用當前選擇，否則使用第一個
             if self.last_selected_dll:
                 dll_base = os.path.splitext(self.last_selected_dll)[0]
                 if dll_base in cleaned_names:
@@ -2462,7 +2448,6 @@ class InjectPage(QWidget):
                 self.dll_select.setCurrentIndex(0)
                 self.dll_to_inject = f"{cleaned_names[0]}.dll"
         else:
-            # 列表相同，保持當前選擇
             if self.last_selected_dll:
                 dll_base = os.path.splitext(self.last_selected_dll)[0]
                 if dll_base in cleaned_names:
@@ -2471,7 +2456,6 @@ class InjectPage(QWidget):
                         self.dll_select.setCurrentIndex(index)
                         self.dll_to_inject = f"{dll_base}.dll"
         
-        # 更新按鈕文字
         current_cleaned_name = self.dll_select.currentText()
         fmt = self.loc_manager.tr("Inject.Btn.InjectFile", "Inject {0}")
         self.inject_button.setText(fmt.format(current_cleaned_name))
@@ -2486,8 +2470,7 @@ class InjectPage(QWidget):
             self.inject_button.setText(fmt.format(cleaned_name))
 
             self.dll_to_inject = f"{cleaned_name}.dll"
-            self.last_selected_dll = self.dll_to_inject  # 記住選擇
-            # 根據選擇的 DLL 更新 GTA 啟動按鈕文字
+            self.last_selected_dll = self.dll_to_inject
             self._update_start_button_text(cleaned_name)
         self._update_ui_for_state()
 
@@ -2495,7 +2478,6 @@ class InjectPage(QWidget):
         """根據 DLL 名稱更新 Start GTA 按鈕的文字"""
         launcher = self.launcher_select.currentText()
         
-        # 只有當選擇 Epic Games 啟動器時才顯示不同文字
         if launcher == "Epic Games":
             if dll_name == "YimMenuV2":
                 self.start_gta_button.setText(
@@ -2506,14 +2488,12 @@ class InjectPage(QWidget):
                     self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
                 )
         else:
-            # 其他啟動器使用預設文字
             self.start_gta_button.setText(
                 self.loc_manager.tr("Inject.Btn.StartGta", "Start GTA 5")
             )
 
     def _on_launcher_selection_changed(self):
         """Enables or disables the start button based on the dropdown selection."""
-        # 更新 DLL 選擇後，也要更新按鈕文字
         if self.dll_to_inject:
             dll_base = os.path.splitext(self.dll_to_inject)[0]
             self._update_start_button_text(dll_base)
@@ -2618,7 +2598,6 @@ class InjectPage(QWidget):
         launcher = self.launcher_select.currentText()
         logger.info(f"Attempting to launch GTA 5 via {launcher} launcher.")
         
-        # 根據選擇的DLL版本決定Epic Games URI
         epic_games_uris = {
             "YimMenu": "com.epicgames.launcher://apps/0584d2013f0149a791e7b9bad0eec102%3A6e563a2c0f5f46e3b4e88b5f4ed50cca%3A9d2d0eb64d5c44529cece33fe2a46482?action=launch&silent=true",
             "YimMenuV2": "com.epicgames.launcher://apps/b0cd075465c44f87be3b505ac04a2e46%3A122e5e90b7b8424d930be8bc1a7e05fb%3A8769e24080ea413b8ebca3f1b8c50951?action=launch&silent=true",
@@ -2626,25 +2605,22 @@ class InjectPage(QWidget):
         
         launch_uris = {
             "Steam": "steam://run/271590",
-            "Epic Games": None,  # 將在下面根據DLL版本設置
-            "Rockstar Games": None,  # 特殊處理
+            "Epic Games": None,
+            "Rockstar Games": None,
         }
         
-        # 如果選擇Epic Games，根據選擇的DLL決定URI
         if launcher == "Epic Games":
             if self.dll_to_inject:
-                dll_base = os.path.splitext(self.dll_to_inject)[0]  # 獲取不帶擴展名的文件名
+                dll_base = os.path.splitext(self.dll_to_inject)[0]
                 uri = epic_games_uris.get(dll_base)
                 
                 if uri:
                     launch_uris["Epic Games"] = uri
                     logger.info(f"Using Epic URI for {dll_base}")
                 else:
-                    # 默認使用YimMenuV2
                     launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
                     logger.warning(f"No specific URI for {dll_base}, using YimMenuV2")
             else:
-                # 默認使用YimMenuV2
                 launch_uris["Epic Games"] = epic_games_uris["YimMenuV2"]
                 logger.info("No DLL selected, using default YimMenuV2 URI for Epic Games")
         
@@ -2802,15 +2778,13 @@ class SettingsPage(QWidget):
         self.loc_manager = loc_manager
         self._is_task_running = False
         
-        # 初始化 YimMenu 版本选择器
-        self.current_yim_version = "v1"  # 默认使用 YimMenu v1
+        self.current_yim_version = "v1"
         self.current_scripts_dir = YIMMENU_SCRIPTS_DIR
         self.current_disabled_dir = os.path.join(YIMMENU_SCRIPTS_DIR, "disabled")
         
-        # 用于存储两个版本的设置
         self.auto_reload_settings = {
-            "v1": False,  # YimMenu (Legacy)
-            "v2": False   # YimMenuV2 (Enhanced)
+            "v1": False,
+            "v2": False
         }
 
         scroll_content_widget = QWidget()
@@ -2829,7 +2803,6 @@ class SettingsPage(QWidget):
         )
         appearance_title.setObjectName("SettingsTitle")
 
-        # Theme buttons
         theme_button_layout = QHBoxLayout()
         self.theme_group = QButtonGroup()
         self.theme_group.setExclusive(True)
@@ -2937,7 +2910,6 @@ class SettingsPage(QWidget):
         lang_layout.addSpacing(10)
         lang_layout.addWidget(self.lang_combo)
 
-        # Add all to appearance layout
         appearance_layout.addWidget(appearance_title)
         appearance_layout.addLayout(theme_button_layout)
         appearance_layout.addSpacing(10)
@@ -2955,7 +2927,6 @@ class SettingsPage(QWidget):
             self.loc_manager.tr("Settings.Header.Lua", "YimMenu Lua Settings")
         )
         self.lua_title.setObjectName("SettingsTitle")
-
 
         # YimMenu Version Selector
         yim_version_layout = QHBoxLayout()
@@ -2979,7 +2950,6 @@ class SettingsPage(QWidget):
         lua_layout.addWidget(self.lua_title)
         lua_layout.addLayout(yim_version_layout)
 
-
         # Auto-reload toggle
         auto_reload_layout = QHBoxLayout()
         self.auto_reload_label = QLabel(
@@ -2999,7 +2969,6 @@ class SettingsPage(QWidget):
         auto_reload_layout.addStretch()
         auto_reload_layout.addWidget(self.auto_reload_toggle)
 
-        #lua_layout.addWidget(self.lua_title)
         lua_layout.addLayout(auto_reload_layout)
 
         # Lua script manager
@@ -3211,6 +3180,34 @@ class SettingsPage(QWidget):
             )
         )
 
+        btn_open_gta_settings_folder = StatefulButton(
+            f"  {self.loc_manager.tr('Settings.Btn.OpenGtaSettingsFolder', 'Open GTA V Settings Folder')}",
+            theme_manager=self.theme_manager,
+            icon_path=resource_path(os.path.join("assets", "icons", "folder.svg")),
+            **link_button_colors,
+        )
+        btn_open_gta_settings_folder.setObjectName("LinkButton")
+        btn_open_gta_settings_folder.setIconSize(QSize(20, 20))
+        btn_open_gta_settings_folder.setToolTip(
+            self.loc_manager.tr(
+                "Settings.Tooltip.OpenGtaSettingsFolder", "Open GTA V Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTA V)"
+            )
+        )
+
+        btn_open_gta_enhanced_settings_folder = StatefulButton(
+            f"  {self.loc_manager.tr('Settings.Btn.OpenGtaEnhancedSettingsFolder', 'Open GTA V Enhanced Settings Folder')}",
+            theme_manager=self.theme_manager,
+            icon_path=resource_path(os.path.join("assets", "icons", "folder.svg")),
+            **link_button_colors,
+        )
+        btn_open_gta_enhanced_settings_folder.setObjectName("LinkButton")
+        btn_open_gta_enhanced_settings_folder.setIconSize(QSize(20, 20))
+        btn_open_gta_enhanced_settings_folder.setToolTip(
+            self.loc_manager.tr(
+                "Settings.Tooltip.OpenGtaEnhancedSettingsFolder", "Open GTA V Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTAV Enhanced)"
+            )
+        )
+
         btn_report_bug = StatefulButton(
             f"  {self.loc_manager.tr('Settings.Btn.ReportBug', 'Report a Bug')}",
             theme_manager=self.theme_manager,
@@ -3245,18 +3242,18 @@ class SettingsPage(QWidget):
             )
         )
         
-        # Update check button
         self.btn_check_for_updates = AnimatedButton(
             self.loc_manager.tr("Settings.Btn.CheckUpdates", "Check for YMU Updates"),
             theme_manager=self.theme_manager,
         )
 
-        # Add all to other layout
         other_layout.addWidget(other_title)
         other_layout.addLayout(debug_console_layout)
         other_layout.addWidget(btn_open_folder)
-        other_layout.addWidget(btn_open_v2_folder)  # 新增的 YimMenuV2 文件夹按钮
+        other_layout.addWidget(btn_open_v2_folder)
         other_layout.addWidget(btn_open_ymu_folder)
+        other_layout.addWidget(btn_open_gta_settings_folder)
+        other_layout.addWidget(btn_open_gta_enhanced_settings_folder)
         other_layout.addWidget(btn_report_bug)
         other_layout.addWidget(btn_request_feature)
         other_layout.addSpacing(15)
@@ -3264,13 +3261,11 @@ class SettingsPage(QWidget):
             self.btn_check_for_updates, alignment=Qt.AlignmentFlag.AlignCenter
         )
 
-        # Add all frames to content layout
         content_layout.addWidget(appearance_frame)
         content_layout.addWidget(lua_frame)
         content_layout.addWidget(other_frame)
         content_layout.addStretch()
 
-        # Setup scroll area
         scroll_area = QScrollArea()
         scroll_area.setObjectName("SettingsScrollArea")
         scroll_area.setWidgetResizable(True)
@@ -3281,13 +3276,13 @@ class SettingsPage(QWidget):
         page_layout.addWidget(scroll_area)
 
         # --- Connect Signals ---
-        # Folder buttons
         btn_open_folder.clicked.connect(lambda: self._open_link(YIMMENU_APPDATA_DIR))
         btn_open_v2_folder.clicked.connect(lambda: self._open_link(YIMMENUV2_APPDATA_DIR))
         btn_open_ymu_folder.clicked.connect(lambda: self._open_link(YMU_APPDATA_DIR))
+        btn_open_gta_settings_folder.clicked.connect(lambda: self._open_link(GTAV_DOCUMENTS_DIR))
+        btn_open_gta_enhanced_settings_folder.clicked.connect(lambda: self._open_link(GTAV_ENHANCED_DOCUMENTS_DIR))
         btn_open_scripts_folder.clicked.connect(self._open_current_scripts_folder)
 
-        # Bug report and feature request
         btn_report_bug.clicked.connect(
             lambda: self._open_link(
                 "https://github.com/tommylam120/YMU/issues/new?template=bug_report.yml"
@@ -3302,10 +3297,8 @@ class SettingsPage(QWidget):
             lambda: self._open_link("https://github.com/orgs/YimMenu-Lua/repositories")
         )
 
-        # Update check
         self.btn_check_for_updates.clicked.connect(self._handle_check_for_updates)
         
-        # Toggle switches
         self.auto_reload_toggle.toggled.connect(self._on_auto_reload_toggled)
         self.debug_console_toggle.toggled.connect(self._on_debug_console_toggled)
         self.auto_reload_toggle.focusChanged.connect(
@@ -3319,12 +3312,10 @@ class SettingsPage(QWidget):
             )
         )
         
-        # Lua script management
         btn_enable_script.clicked.connect(self._enable_selected_scripts)
         btn_disable_script.clicked.connect(self._disable_selected_scripts)
         self.btn_refresh_luas.clicked.connect(self._refresh_lua_lists)
 
-        # Initial setup
         self._refresh_lua_lists()
         self._load_initial_settings()
 
@@ -3343,7 +3334,6 @@ class SettingsPage(QWidget):
         
         self.lua_title.setText(title)
         
-        # 更新 Auto-reload 设置显示
         self._load_auto_reload_setting()
         self._refresh_lua_lists()
 
@@ -3356,13 +3346,11 @@ class SettingsPage(QWidget):
         enabled = []
         disabled = []
         
-        # 获取启用的脚本
         if os.path.exists(self.current_scripts_dir):
             for file in os.listdir(self.current_scripts_dir):
                 if file.endswith('.lua'):
                     enabled.append(file)
         
-        # 获取禁用的脚本
         if os.path.exists(self.current_disabled_dir):
             for file in os.listdir(self.current_disabled_dir):
                 if file.endswith('.lua'):
@@ -3403,10 +3391,8 @@ class SettingsPage(QWidget):
 
     def _load_initial_settings(self):
         """Loads settings from the file and sets the UI state."""
-        # 加载两个版本的 Auto-reload 设置
         self._load_auto_reload_setting()
         
-        # 加载 Debug Console 设置（通用）
         is_debug_enabled = settings_manager.get_setting(
             "debug.external_console", default=False
         )
@@ -3414,24 +3400,21 @@ class SettingsPage(QWidget):
 
     def _load_auto_reload_setting(self):
         """加载当前选择的 YimMenu 版本的 Auto-reload 设置"""
-        is_enabled = settings_manager.settings_manager.get_auto_reload_changed_scripts(
-            self.current_yim_version
+        is_enabled = settings_manager.get_setting(
+            f"lua.auto_reload.{self.current_yim_version}", default=False
         )
         self.auto_reload_toggle.setChecked(bool(is_enabled))
 
     def _on_auto_reload_toggled(self, checked: bool):
         """Called when the user clicks the auto-reload toggle."""
-        # 保存当前版本的设置
-        settings_manager.settings_manager.set_auto_reload_changed_scripts(
-            checked, self.current_yim_version
+        settings_manager.set_setting(
+            f"lua.auto_reload.{self.current_yim_version}", checked
         )
-        
-        # 更新本地缓存
         self.auto_reload_settings[self.current_yim_version] = checked
 
     def _on_debug_console_toggled(self, checked: bool):
         """Called when the user clicks the debug console toggle."""
-        settings_manager.settings_manager.set_setting("debug.external_console", checked)
+        settings_manager.set_setting("debug.external_console", checked)
 
     def _on_toggle_focus_changed(self, label: QLabel, has_focus: bool):
         """Updates the style of a label based on the focus state of its toggle."""

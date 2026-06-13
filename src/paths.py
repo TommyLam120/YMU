@@ -2,7 +2,7 @@
 import os
 import sys
 
-LOCAL_VERSION = "v1.1.7"
+LOCAL_VERSION = "v1.1.8"
 APP_URL = "https://github.com/tommylam120/YMU"
 USER_AGENT = f"YMU/{LOCAL_VERSION} (+{APP_URL})"
 
@@ -23,6 +23,10 @@ def _create_path(path: str) -> str:
 
 # Base paths
 APPDATA_PATH = get_required_env("APPDATA")
+USERPROFILE = os.getenv("USERPROFILE")
+if USERPROFILE is None:
+    raise EnvironmentError("Required environment variable 'USERPROFILE' is not set.")
+
 
 # ========== YMU Application Paths ==========
 YMU_APPDATA_DIR = _create_path(os.path.join(APPDATA_PATH, "YMU"))
@@ -30,6 +34,13 @@ YMU_DLL_DIR = _create_path(os.path.join(YMU_APPDATA_DIR, "dll"))
 YMU_LANG_DIR = _create_path(os.path.join(YMU_APPDATA_DIR, "lang"))
 YMU_LOG_FILE_PATH = os.path.join(YMU_APPDATA_DIR, "ymu.log")
 YMU_CONFIG_FILE_PATH = os.path.join(YMU_APPDATA_DIR, "config.json")
+
+# ========== GTAV Game Directory Paths ==========
+GTAV_DOCUMENTS_DIR = os.path.join(USERPROFILE, "Documents", "Rockstar Games", "GTA V")
+GTAV_ENHANCED_DOCUMENTS_DIR = os.path.join(USERPROFILE, "Documents", "Rockstar Games", "GTAV Enhanced")
+
+# Note: These paths may not exist if the game hasn't been run yet
+# Use os.path.exists() to check before using
 
 # ========== YimMenu (Legacy v1) Paths ==========
 YIMMENU_APPDATA_DIR = _create_path(os.path.join(APPDATA_PATH, "YimMenu"))
@@ -67,6 +78,28 @@ def get_yimmenu_paths(version: str = "v1") -> dict:
             "scripts_dir": YIMMENU_SCRIPTS_DIR,
             "disabled_dir": YIMMENU_DISABLED_SCRIPTS_DIR,
             "settings_file": YIMMENU_SETTINGS_FILE_PATH
+        }
+
+
+def get_gtav_paths(enhanced: bool = False) -> dict:
+    """
+    Get GTAV game directory paths.
+    
+    Args:
+        enhanced: True for GTAV Enhanced, False for standard GTAV
+        
+    Returns:
+        Dictionary with game directory paths
+    """
+    if enhanced:
+        return {
+            "game_dir": GTAV_ENHANCED_DOCUMENTS_DIR,
+            "is_enhanced": True
+        }
+    else:
+        return {
+            "game_dir": GTAV_DOCUMENTS_DIR,
+            "is_enhanced": False
         }
 
 
@@ -114,7 +147,9 @@ def get_version_info() -> dict:
         "user_agent": USER_AGENT,
         "yimmenu_v1_path": YIMMENU_APPDATA_DIR,
         "yimmenu_v2_path": YIMMENUV2_APPDATA_DIR,
-        "ymu_path": YMU_APPDATA_DIR
+        "ymu_path": YMU_APPDATA_DIR,
+        "gtav_path": GTAV_DOCUMENTS_DIR,
+        "gtav_enhanced_path": GTAV_ENHANCED_DOCUMENTS_DIR
     }
 
 
@@ -128,6 +163,15 @@ def print_paths() -> None:
     print(f"YMU Lang Dir: {YMU_LANG_DIR}")
     print(f"YMU Log File: {YMU_LOG_FILE_PATH}")
     print(f"YMU Config: {YMU_CONFIG_FILE_PATH}")
+    print()
+    
+    print("=" * 60)
+    print("GTAV Game Paths:")
+    print("=" * 60)
+    print(f"GTAV Documents: {GTAV_DOCUMENTS_DIR}")
+    print(f"GTAV Enhanced Documents: {GTAV_ENHANCED_DOCUMENTS_DIR}")
+    print(f"GTAV Documents Exists: {os.path.exists(GTAV_DOCUMENTS_DIR)}")
+    print(f"GTAV Enhanced Exists: {os.path.exists(GTAV_ENHANCED_DOCUMENTS_DIR)}")
     print()
     
     print("=" * 60)
