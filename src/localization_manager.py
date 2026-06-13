@@ -173,7 +173,7 @@ FALLBACK_DATA = {
                 "OpenYimFolder": "Open YimMenu folder (%APPDATA%/YimMenu)",
                 "OpenYimV2Folder": "Open YimMenuV2 folder (%APPDATA%/YimMenuV2)",
                 "OpenGtaSettingsFolder":"Open GTA V Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTA V)",
-                "OpenGtaEnhancedSettingsFolder":"Open GTA V Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTA V Enhanced)",
+                "OpenGtaEnhancedSettingsFolder":"Open GTA V Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTAV Enhanced)",
                 "OpenYmuFolder": "Open YMU folder (%APPDATA%/YMU)",
                 "ReportBug": "Open the bug report page on GitHub in your browser",
                 "RequestFeature": "Open the feature request page on GitHub in your browser",
