@@ -15,8 +15,7 @@ except (ImportError, AttributeError):
 
 # check if an instance is already running -> yes? -> gets focused
 if IS_WINDOWS:
-    WINDOW_TITLE = "YimMenuUpdater"
-    #WINDOW_TITLE = "YimMenuUpdater | NV3"
+    WINDOW_TITLE = "YimMenuUpdater | NV3"
     try:
         hwnd = win32gui.FindWindow(None, WINDOW_TITLE)
         if hwnd != 0:
@@ -1520,8 +1519,7 @@ class MainWindow(QMainWindow):
         self.loc_manager = loc_manager
         self.notification_manager = NotificationManager(self, self.theme_manager)
 
-        #self.setWindowTitle("YimMenuUpdater | NV3")
-        self.setWindowTitle("YimMenuUpdater")
+        self.setWindowTitle("YimMenuUpdater | NV3")
         self.setFixedSize(QSize(780, 520))
 
         main_widget = QWidget()
@@ -1790,8 +1788,7 @@ class RiskPage(QWidget):
             )
         )
         yimv2_repo_button.clicked.connect(
-            #lambda: webbrowser.open("https://github.com/YimMenu/YimMenuV2")
-            lambda: webbrowser.open("https://github.com/tommylam120/YimMenuV2_Traditional-Chinese")
+            lambda: webbrowser.open("https://github.com/YimMenu/YimMenuV2")
         )
 
         fsl_thread_button = StatefulButton(
@@ -1842,12 +1839,8 @@ class DownloadPage(QWidget):
     RELEASE_CHANNELS = {
         "YimMenu (Legacy)": {"repo": "Mr-X-GTA/YimMenu", "dll_name": "YimMenu.dll"},
         "YimMenuV2 (Enhanced)": {
-            "repo": "tommylam120/YimMenuV2_Traditional-Chinese",  # 修改為你的倉庫
+            "repo": "YimMenu/YimMenuV2",
             "dll_name": "YimMenuV2.dll",
-   
-        #"YimMenuV2 (Enhanced)": {
-            #"repo": "YimMenu/YimMenuV2",
-          #  "dll_name": "YimMenuV2.dll",
         },
     }
 
@@ -3215,34 +3208,6 @@ class SettingsPage(QWidget):
         btn_open_ymu_folder.setToolTip(
             self.loc_manager.tr(
                 "Settings.Tooltip.OpenYmuFolder", "Open YMU folder (%APPDATA%/YMU)"
-            )
-        )
-
-        btn_open_ymu_folder = StatefulButton(
-            f"  {self.loc_manager.tr('Settings.Btn.OpenYmuFolder', 'Open GTAV Settings Folder')}",
-            theme_manager=self.theme_manager,
-            icon_path=resource_path(os.path.join("assets", "icons", "folder.svg")),
-            **link_button_colors,
-        )
-        btn_open_ymu_folder.setObjectName("LinkButton")
-        btn_open_ymu_folder.setIconSize(QSize(20, 20))
-        btn_open_ymu_folder.setToolTip(
-            self.loc_manager.tr(
-                "Settings.Tooltip.OpenGtaSettingsFolder", "Open GTAV Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTAV)"
-            )
-        )
-
-        btn_open_ymu_folder = StatefulButton(
-            f"  {self.loc_manager.tr('Settings.Btn.OpenYmuFolder', 'Open GTAV Enhanced Settings Folder')}",
-            theme_manager=self.theme_manager,
-            icon_path=resource_path(os.path.join("assets", "icons", "folder.svg")),
-            **link_button_colors,
-        )
-        btn_open_ymu_folder.setObjectName("LinkButton")
-        btn_open_ymu_folder.setIconSize(QSize(20, 20))
-        btn_open_ymu_folder.setToolTip(
-            self.loc_manager.tr(
-                "Settings.Tooltip.OpenGtaEnhancedSettingsFolder", "Open GTAV Enhanced Settings Folder (%USERPROFILE%/Documents/Rockstar Games/GTAV Enhanced)"
             )
         )
 
